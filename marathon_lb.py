@@ -838,7 +838,10 @@ def config(apps, groups, bind_http_https, ssl_certs, templater):
         if app.mode == 'http':
             if app.useHsts:
                 backends += templater.haproxy_backend_hsts_options(app)
-            backends += templater.haproxy_backend_http_options(app)
+            backend_http_options = templater.haproxy_backend_http_options(app);
+            backends += backend_http_options.format(
+                path=app.path
+              )
 
         if app.healthCheck:
             health_check_options = None

@@ -804,7 +804,8 @@ def config(apps, groups, bind_http_https, ssl_certs, templater):
         backends += backend_head.format(
             backend=backend,
             balance=app.balance,
-            mode=app.mode
+            mode=app.mode,
+            path=app.path
         )
 
         # if a hostname is set we add the app to the vhost section

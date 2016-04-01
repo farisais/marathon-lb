@@ -1565,6 +1565,9 @@ def get_arg_parser():
     parser.add_argument("--dry", "-d",
                         help="Only print configuration to console",
                         action="store_true")
+    parser.add_argument("--templates-dir",
+                        help="Template directory path",
+                        default="templates")
     parser = set_logging_args(parser)
     parser = set_marathon_auth_args(parser)
     return parser
@@ -1703,4 +1706,4 @@ if __name__ == '__main__':
         # Generate base config
         regenerate_config(get_apps(marathon), args.haproxy_config, args.group,
                           not args.dont_bind_http_https,
-                          args.ssl_certs, ConfigTemplater())
+                          args.ssl_certs, ConfigTemplater(directory=args.templates_dir))

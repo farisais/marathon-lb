@@ -1,5 +1,4 @@
 frontend marathon_http_in
-  bind *:9091
+  bind *:80
   mode http
   redirect scheme https code 301 if !{ ssl_fc }
-  

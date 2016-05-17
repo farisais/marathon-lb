@@ -1,7 +1,7 @@
 global
   daemon
   log 127.0.0.1 local0
-  log 127.0.0.1 local1 notice
+  log 127.0.0.1 local0 notice
   log 127.0.0.1 local0 info
   maxconn 50000
   tune.ssl.default-dh-param 2048
@@ -33,6 +33,7 @@ defaults
   option            redispatch
   option            http-server-close
   option            dontlognull
+  log               global
 listen stats
   bind 0.0.0.0:9090
   balance

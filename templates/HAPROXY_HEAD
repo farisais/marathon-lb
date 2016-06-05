@@ -23,12 +23,12 @@ defaults
   backlog               10000
   maxconn               10000
   timeout connect          3s
-  timeout client          30s
-  timeout server          30s
+  timeout client         300s
+  timeout server         300s
   timeout tunnel        3600s
   timeout http-keep-alive  1s
-  timeout http-request    300s
-  timeout queue           30s
+  timeout http-request   300s
+  timeout queue          300s
   timeout tarpit          60s
   option            redispatch
   option            http-server-close

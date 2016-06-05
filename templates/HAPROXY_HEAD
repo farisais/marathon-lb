@@ -27,7 +27,7 @@ defaults
   timeout server          30s
   timeout tunnel        3600s
   timeout http-keep-alive  1s
-  timeout http-request    15s
+  timeout http-request    300s
   timeout queue           30s
   timeout tarpit          60s
   option            redispatch

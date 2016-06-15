@@ -27,7 +27,7 @@ reload() {
   socat /var/run/haproxy/socket - <<< "show servers state" > /var/state/haproxy/global
 
   # Trigger reload
-  haproxy -p $PIDFILE -f /etx/haproxy/haproxy.cfg -D -sf $(cat $PIDFILE)
+  haproxy -p $PIDFILE -f /etc/haproxy/haproxy.cfg -D -sf $(cat $PIDFILE)
 
   # Remove the firewall rules
   IFS=',' read -ra ADDR <<< "$PORTS"

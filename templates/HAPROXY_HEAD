@@ -19,6 +19,9 @@ defaults
   load-server-state-from-file global
   option		httplog
   option		dontlognull
+  option    redispatch
+  option    constats
+  option    http-server-close
   retries                   3
   backlog               10000
   maxconn               10000
@@ -30,10 +33,9 @@ defaults
   timeout http-request   300s
   timeout queue          300s
   timeout tarpit          60s
-  option            redispatch
-  option            http-server-close
-  option            dontlognull
-  log               global
+  default-server inter 3s rise 2 fall 3
+  log       global
+  option    forwardfor
 listen stats
   bind 0.0.0.0:9090
   balance

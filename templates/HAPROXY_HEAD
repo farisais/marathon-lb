@@ -15,27 +15,30 @@ global
   lua-load /opt/marathon-lb/getpids.lua
   lua-load /opt/marathon-lb/getconfig.lua
   debug
+  
 defaults
   load-server-state-from-file global
-  option		httplog
-  option		dontlognull
+  option    httplog
+  option    dontlognull
   option    redispatch
   option    contstats
   option    http-server-close
+  option    forceclose
+  option    forwardfor
   retries                   3
   backlog               10000
   maxconn               10000
   timeout connect          3s
   timeout client         300s
   timeout server         300s
-  timeout tunnel        3600s
+  timeout tunnel           1h
   timeout http-keep-alive  1s
   timeout http-request   300s
   timeout queue          300s
   timeout tarpit          60s
   default-server inter 3s rise 2 fall 3
   log       global
-  option    forwardfor
+
 listen stats
   bind 0.0.0.0:9090
   balance

@@ -20,7 +20,7 @@ defaults
   option		httplog
   option		dontlognull
   option    redispatch
-  option    constats
+  option    contstats
   option    http-server-close
   retries                   3
   backlog               10000

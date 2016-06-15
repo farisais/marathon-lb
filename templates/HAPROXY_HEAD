@@ -15,7 +15,7 @@ global
   lua-load /opt/marathon-lb/getpids.lua
   lua-load /opt/marathon-lb/getconfig.lua
   debug
-  
+
 defaults
   load-server-state-from-file global
   option    httplog
@@ -36,7 +36,6 @@ defaults
   timeout http-request   300s
   timeout queue          300s
   timeout tarpit          60s
-  default-server inter 3s rise 2 fall 3
   log       global
 
 listen stats

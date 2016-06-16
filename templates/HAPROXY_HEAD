@@ -36,7 +36,6 @@ defaults
   timeout http-keep-alive  1s
   timeout http-request   300s
   timeout queue          300s
-  timeout tarpit          60s
   log       global
 
 listen stats

@@ -24,6 +24,7 @@ defaults
   option    redispatch
   option    contstats
   option    http-server-close
+  no option httpclose
   option    forceclose
   option    forwardfor
   retries                   3

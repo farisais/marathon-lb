@@ -1668,7 +1668,7 @@ if __name__ == '__main__':
     setup_logging(logger, args.syslog_socket, args.log_format)
 
     # Marathon API connector
-    marathon_host_list = args.marathon.split(' ')
+    marathon_host_list = args.marathon[0].split(' ')
     marathon = Marathon(args.marathon,
                         args.health_check,
                         get_marathon_auth_params(args))

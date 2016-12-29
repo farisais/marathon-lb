@@ -1670,7 +1670,7 @@ if __name__ == '__main__':
 
     # Marathon API connector
     marathon_host_list = args.marathon[0].split(' ')
-    marathon = Marathon(args.marathon,
+    marathon = Marathon(marathon_host_list,
                         args.health_check,
                         get_marathon_auth_params(args))
 

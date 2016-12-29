@@ -1265,11 +1265,8 @@ def get_health_check(app, portIndex):
     return None
 
 
-def get_apps(marathon_prod, marathon_dev):
-    apps = marathon_prod.list()
-    if marathon_dev != None:
-      apps = apps + marathon_dev.list()
-
+def get_apps(marathon):
+    apps = marathon.list()
     logger.debug("got apps %s", [app["id"] for app in apps])
 
     marathon_apps = []
@@ -1671,52 +1668,43 @@ if __name__ == '__main__':
     setup_logging(logger, args.syslog_socket, args.log_format)
 
     # Marathon API connector
-    print "marathon host : ", args.marathon
-    marathon_host_list = args.marathon[0].split(' ')
-    prod_marathon = marathon_host_list[0]
-    dev_marathon = None
-    if len(marathon_host_list) > 1:
-      dev_marathon = marathon_host_list[1]
-    marathon_prod = Marathon(prod_marathon,
+    marathon_host_list = args.marathon.split(' ')
+    marathon = Marathon(args.marathon,
                         args.health_check,
                         get_marathon_auth_params(args))
-    marathon_dev = None
-    if dev_marathon != None:
-      marathon_dev = Marathon(dev_marathon,
-                          args.health_check,
-                          get_marathon_auth_params(args))
+
     # If in listening mode, spawn a webserver waiting for events. Otherwise
     # just write the config.
-    # if args.listening:
-    #     callback_url = args.callback_url or args.listening
-    #     try:
-    #         run_server(marathon, args.listening, callback_url,
-    #                    args.haproxy_config, args.group,
-    #                    not args.dont_bind_http_https, args.ssl_certs)
-    #     finally:
-    #         clear_callbacks(marathon, callback_url)
-    # elif args.sse:
-    #     backoff = 3
-    #     while True:
-    #         stream_started = time.time()
-    #         try:
-    #             process_sse_events(marathon,
-    #                                args.haproxy_config,
-    #                                args.group,
-    #                                not args.dont_bind_http_https,
-    #                                args.ssl_certs)
-    #         except:
-    #             logger.exception("Caught exception")
-    #             backoff = backoff * 1.5
-    #             if backoff > 300:
-    #                 backoff = 300
-    #             logger.error("Reconnecting in {}s...", backoff)
-    #         # Reset the backoff if it's been more than 10 minutes
-    #         if time.time() - stream_started > 600:
-    #             backoff = 3
-    #         time.sleep(random.random() * backoff)
-    # else:
-    #     # Generate base config
-    regenerate_config(get_apps(marathon_prod, marathon_dev), args.haproxy_config, args.group,
-                      not args.dont_bind_http_https,
-                      args.ssl_certs, ConfigTemplater(directory=args.templates_dir))
+    if args.listening:
+        callback_url = args.callback_url or args.listening
+        try:
+            run_server(marathon, args.listening, callback_url,
+                       args.haproxy_config, args.group,
+                       not args.dont_bind_http_https, args.ssl_certs)
+        finally:
+            clear_callbacks(marathon, callback_url)
+    elif args.sse:
+        backoff = 3
+        while True:
+            stream_started = time.time()
+            try:
+                process_sse_events(marathon,
+                                   args.haproxy_config,
+                                   args.group,
+                                   not args.dont_bind_http_https,
+                                   args.ssl_certs)
+            except:
+                logger.exception("Caught exception")
+                backoff = backoff * 1.5
+                if backoff > 300:
+                    backoff = 300
+                logger.error("Reconnecting in {}s...", backoff)
+            # Reset the backoff if it's been more than 10 minutes
+            if time.time() - stream_started > 600:
+                backoff = 3
+            time.sleep(random.random() * backoff)
+    else:
+        # Generate base config
+        regenerate_config(get_apps(marathon), args.haproxy_config, args.group,
+                          not args.dont_bind_http_https,
+                          args.ssl_certs, ConfigTemplater(directory=args.templates_dir))

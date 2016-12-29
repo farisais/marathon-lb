@@ -1267,7 +1267,7 @@ def get_health_check(app, portIndex):
 
 
 def get_apps(marathon_prod, marathon_dev):
-    apps = marathon.list() + marathon_dev.list()
+    apps = marathon_prod.list() + marathon_dev.list()
     logger.debug("got apps %s", [app["id"] for app in apps])
 
     marathon_apps = []
@@ -1360,7 +1360,7 @@ def get_apps(marathon_prod, marathon_dev):
         if appId[1:] == os.environ.get("FRAMEWORK_NAME"):
             continue
 
-        marathon_app = MarathonApp(marathon, appId, app)
+        marathon_app = MarathonApp(marathon_prod, appId, app)
 
         if 'HAPROXY_GROUP' in marathon_app.app['labels']:
             marathon_app.groups = \
@@ -1390,7 +1390,7 @@ def get_apps(marathon_prod, marathon_dev):
                                task['id'])
                 continue
 
-            if marathon.health_check() and 'healthChecks' in app and \
+            if marathon_prod.health_check() and 'healthChecks' in app and \
                len(app['healthChecks']) > 0:
                 if 'healthCheckResults' not in task:
                     continue

@@ -631,6 +631,7 @@ class Marathon(object):
 
             for path_elem in path:
                 path_str = path_str + "/" + path_elem
+            print "requesting from ", path_str
             response = requests.request(
                 method,
                 path_str,

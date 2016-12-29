@@ -45,5 +45,5 @@ mkdir -p /var/run/haproxy
 
 reload
 
-trap reload SIGHUP
-while true; do sleep 0.5; done
+# trap reload SIGHUP
+# while true; do sleep 0.5; done

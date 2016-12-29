@@ -1670,10 +1670,10 @@ if __name__ == '__main__':
 
     # Marathon API connector
     marathon_host_list = args.marathon[0].split(' ')
-    marathon_prod = Marathon(marathon_host_list[0],
+    marathon_prod = Marathon([marathon_host_list[0]],
                         args.health_check,
                         get_marathon_auth_params(args))
-    marathon_dev = Marathon(marathon_host_list[1],
+    marathon_dev = Marathon([marathon_host_list[1]],
                         args.health_check,
                         get_marathon_auth_params(args))
     # If in listening mode, spawn a webserver waiting for events. Otherwise

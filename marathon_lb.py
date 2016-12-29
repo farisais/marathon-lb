@@ -1672,7 +1672,7 @@ if __name__ == '__main__':
 
     # Marathon API connector
     print "marathon host : ", args.marathon
-    marathon_host_list = str(args.marathon).split(',')
+    marathon_host_list = args.marathon
     prod_marathon = marathon_host_list[0]
     dev_marathon = None
     if len(marathon_host_list) > 1:

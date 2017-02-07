@@ -196,16 +196,16 @@ AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS
 
     HAPROXY_HTTP_FRONTEND_ACL_WITH_PATH = '''\
   acl host_{cleanedUpHostname} hdr(host) -i {hostname}
-  acl path_{backend} path_beg {path}
+  acl path_{backend} path {path}
   use_backend {backend} if host_{cleanedUpHostname} path_{backend}
 '''
 
     HAPROXY_HTTP_FRONTEND_ACL_ONLY_WITH_PATH = '''\
-  acl path_{backend} path_beg {path}
+  acl path_{backend} path {path}
 '''
 
     HAPROXY_HTTPS_FRONTEND_ACL_ONLY_WITH_PATH = '''\
-  acl path_{backend} path_beg {path}
+  acl path_{backend} path {path}
 '''
 
     HAPROXY_HTTP_FRONTEND_ROUTING_ONLY_WITH_PATH = '''\
